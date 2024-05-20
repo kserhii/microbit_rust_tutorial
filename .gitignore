@@ -1,0 +1,6 @@
+# Rust and Cargo
+debug/
+target/
+Cargo.lock
+
+# Project
