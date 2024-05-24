@@ -33,9 +33,10 @@ sudo udevadm control --reload-rules
 
 ``` console
 rustup component add llvm-tools-preview
-cargo install cargo-binutils --vers 0.3.3
-cargo install cargo-embed --vers 0.18.0
 rustup target add thumbv7m-none-eabi
+cargo install cargo-binutils
+cargo install probe-rs --features cli
+cargo install flip-link
 ```
 
 ## Verify permissions
