@@ -4,14 +4,17 @@ CHIP = nrf52833_xxAA
 build:
 	cargo build
 
+build-release:
+	cargo build --release
+
 flash:
 	cargo flash --chip ${CHIP}
 
-deploy:
-	cargo embed
+run:
+	cargo run
 
-deploy-debug:
-	cargo embed debug
+run-relese:
+	cargo run --release
 
 clean:
 	cargo clean

@@ -3,6 +3,8 @@
 ## Documentation
 
 * https://docs.rust-embedded.org/discovery/microbit/
+* https://probe.rs/docs/tools/probe-rs/
+* https://embassy.dev/
 
 ## Setup
 
