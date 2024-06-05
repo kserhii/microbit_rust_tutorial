@@ -1,5 +1,8 @@
 # MicroBit on Rust
 
+## Board
+* CPU: nRF52833
+
 ## Documentation
 
 * https://docs.rust-embedded.org/discovery/microbit/
@@ -11,9 +14,7 @@
 ### libs
 
 ``` console
-sudo apt-get install \
-  gdb-multiarch \
-  minicom
+sudo apt-get install gdb-multiarch minicom
 ```
 
 ### udev rules

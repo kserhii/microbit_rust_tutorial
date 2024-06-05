@@ -10,6 +10,8 @@ build-release:
 flash:
 	cargo flash --chip ${CHIP}
 
+deploy: build flash
+
 run:
 	cargo run
 
