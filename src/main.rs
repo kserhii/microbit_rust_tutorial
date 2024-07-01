@@ -1,24 +1,35 @@
 #![no_std]
 #![no_main]
-#![deny(unsafe_code)]
 
 use embassy_executor::Spawner;
-use embassy_nrf::gpio::{Level, Output, OutputDrive};
-use embassy_time::Timer;
+use embassy_futures::select::{select, Either};
+use embassy_time::Duration;
 use {defmt_rtt as _, panic_probe as _};
+use microbit_bsp::{Microbit, display};
 
 #[embassy_executor::main]
 async fn main(_spawner: Spawner) {
-    let p = embassy_nrf::init(Default::default());
-    let mut row1 = Output::new(p.P0_22, Level::Low, OutputDrive::Standard);
-    let mut col1 = Output::new(p.P0_28, Level::Low, OutputDrive::Standard);
+    let board = Microbit::default();
 
-    col1.set_low();
+    let mut display = board.display;
+    let mut btn_a = board.btn_a;
+    let mut btn_b = board.btn_b;
 
+    display.set_brightness(display::Brightness::MAX);
+    display.scroll("Hello, World!").await;
+    defmt::info!("Application started, press buttons!");
     loop {
-        row1.set_high();
-        Timer::after_millis(300).await;
-        row1.set_low();
-        Timer::after_millis(300).await;
+        match select(btn_a.wait_for_low(), btn_b.wait_for_low()).await {
+            Either::First(_) => {
+                display
+                    .display(display::fonts::ARROW_LEFT, Duration::from_secs(1))
+                    .await;
+            }
+            Either::Second(_) => {
+                display
+                    .display(display::fonts::ARROW_RIGHT, Duration::from_secs(1))
+                    .await;
+            }
+        }
     }
 }
